@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async Equation Evaluator Results</title>
+    <link rel="stylesheet" href="stylesheetT1.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 100px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        #distance {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Euclidean Distance Result</h2>
+    <div id="distance"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    class DistanceCalculator {
+        constructor(x1, y1, x2, y2) {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+        }
+
+        async computeDistance() {
+            const dx = this.x2 - this.x1;
+            const dy = this.y2 - this.y1;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            return distance;
+        }
+    }
+
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const x1 = parseFloat(urlParams.get('x1'));
+        const y1 = parseFloat(urlParams.get('y1'));
+        const x2 = parseFloat(urlParams.get('x2'));
+        const y2 = parseFloat(urlParams.get('y2'));
+
+        const distanceCalculator = new DistanceCalculator(x1, y1, x2, y2);
+        distanceCalculator.computeDistance().then(distance => {
+            $('#distance').text(`Euclidean Distance: ${distance}`);
+        });
+    });
+</script>
+
+</body>
+</html>
